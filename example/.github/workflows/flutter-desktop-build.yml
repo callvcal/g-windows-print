@@ -1,0 +1,53 @@
+name: Build g_windows_print Example (Windows) - Fast Debug
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  build-example-debug:
+    name: Build Example Windows App (Debug)
+    runs-on: windows-latest
+
+    env:
+      FLUTTER_CACHE_DIR: C:\hostedtoolcache\windows\flutter
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # ================= Flutter SDK Cache =================
+      - name: Cache Flutter SDK
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.FLUTTER_CACHE_DIR }}
+          key: flutter-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-
+
+      # ================= Set up Flutter =================
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.27.1"
+          channel: stable
+
+      - name: Enable Windows Desktop
+        run: flutter config --enable-windows-desktop
+
+      # ================= Install Dependencies =================
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # ================= Build Example (Debug) =================
+      - name: Build Windows Debug
+        run: flutter build windows --debug
+
+      # ================= Optional: Upload Debug Artifacts =================
+      - name: Upload Debug Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: g_windows_print-example-windows-debug
+          path: build/windows/x64/runner/Debug/
