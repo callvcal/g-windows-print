@@ -1,4 +1,4 @@
-#include "include/g_windows_print/g_windows_print_plugin.h"
+#include "g_windows_print_plugin.h"
 
 #include <flutter/plugin_registrar_windows.h>
 
