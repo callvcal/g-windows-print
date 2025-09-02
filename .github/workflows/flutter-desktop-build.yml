@@ -39,6 +39,11 @@ jobs:
         run: flutter pub get
         working-directory: example
 
+      # ================= Pre-build plugin =================
+      - name: Pre-build Flutter Plugins
+        run: flutter build windows --debug --no-build
+        working-directory: example
+
       # ================= Build Example (Debug) =================
       - name: Build Windows Debug
         run: flutter build windows --debug
