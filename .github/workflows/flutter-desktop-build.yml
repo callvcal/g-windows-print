@@ -1,9 +1,6 @@
 name: Build g_windows_print Example (Windows) - Fast Debug
 
 on:
-#  push:
-#    branches:
-#      - dev
   workflow_dispatch:
 
 jobs:
@@ -23,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.FLUTTER_CACHE_DIR }}
-          key: flutter-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml') }}
+          key: flutter-${{ runner.os }}-${{ hashFiles('example/pubspec.yaml') }}
           restore-keys: |
             flutter-${{ runner.os }}-
 
@@ -40,14 +37,16 @@ jobs:
       # ================= Install Dependencies =================
       - name: Install Dependencies
         run: flutter pub get
+        working-directory: example
 
       # ================= Build Example (Debug) =================
       - name: Build Windows Debug
         run: flutter build windows --debug
+        working-directory: example
 
-      # ================= Optional: Upload Debug Artifacts =================
+      # ================= Upload Debug Artifacts =================
       - name: Upload Debug Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: g_windows_print-example-windows-debug
-          path: build/windows/x64/runner/Debug/
+          path: example/build/windows/x64/runner/Debug/
