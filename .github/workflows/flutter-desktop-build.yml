@@ -10,8 +10,10 @@ jobs:
 
     env:
       FLUTTER_CACHE_DIR: C:\hostedtoolcache\windows\flutter
+      FLUTTER_ROOT: C:\hostedtoolcache\windows\flutter\stable-3.27.1-x64
 
     steps:
+      # ================= Checkout Source =================
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -20,7 +22,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.FLUTTER_CACHE_DIR }}
-          key: flutter-${{ runner.os }}-${{ hashFiles('example/pubspec.yaml') }}
+          key: flutter-${{ runner.os }}-3.27.1
           restore-keys: |
             flutter-${{ runner.os }}-
 
