@@ -1,9 +1,9 @@
 name: Build g_windows_print Example (Windows) - Fast Debug
 
 on:
-  push:
-    branches:
-      - dev
+#  push:
+#    branches:
+#      - dev
   workflow_dispatch:
 
 jobs:
